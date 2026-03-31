@@ -1,0 +1,262 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%  Template for homework of Machine Learning.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[11pt,letter,notitlepage]{ctexart}
+
+\usepackage{fontspec}
+\setCJKmainfont{KaiTi}[BoldFont=KaiTi,ItalicFont=KaiTi]
+
+% Mise en page
+\usepackage[left=2cm, right=2cm, lines=45, top=0.8in, bottom=0.7in]{geometry}
+\usepackage{fancyhdr}
+\usepackage{fancybox}
+\usepackage{graphicx}
+\usepackage{pdfpages}
+\usepackage{enumitem}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{array}
+\usepackage{booktabs}
+\renewcommand{\headrulewidth}{1.5pt}
+\renewcommand{\footrulewidth}{1.5pt}
+\newcommand\Loadedframemethod{TikZ}
+\usepackage[framemethod=\Loadedframemethod]{mdframed}
+\usepackage{amssymb,amsmath}
+\usepackage{amsthm}
+\usepackage{thmtools}
+\usepackage{bm}
+\usepackage{multirow}
+\usepackage{makecell}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{float}
+
+\setlength{\topmargin}{0pt}
+\setlength{\textheight}{9in}
+\setlength{\headheight}{0pt}
+\setlength{\oddsidemargin}{0.25in}
+\setlength{\textwidth}{6in}
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%% Define math operator %%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%
+\DeclareMathOperator*{\argmin}{\bf argmin}
+\DeclareMathOperator*{\relint}{\bf relint\,}
+\DeclareMathOperator*{\dom}{\bf dom\,}
+\DeclareMathOperator*{\intp}{\bf int\,}
+
+\DeclareMathOperator*{\cl}{\bf cl\,}
+\DeclareMathOperator*{\bd}{\bf bd\,}
+\DeclareMathOperator*{\conv}{\bf conv\,}
+\DeclareMathOperator*{\epi}{\bf epi\,}
+
+%%%%%%%%%%%%%%%%%%%%%%%
+\pagestyle{fancy}
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+%% Define the Exercise environment %%
+%%%%%%%%%%%%%%%%%%%%%%%%
+\mdtheorem[
+topline=false,
+rightline=false,
+leftline=false,
+bottomline=false,
+leftmargin=-10,
+rightmargin=-10
+]{exercise}{\textbf{Exercise}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+%% Define the Problem environment %%
+%%%%%%%%%%%%%%%%%%%%%%%%
+\mdtheorem[
+topline=false,
+rightline=false,
+leftline=false,
+bottomline=false,
+leftmargin=-10,
+rightmargin=-10
+]{problem}{\textbf{Problem}}
+
+%%%%%%%%%%%%%%%%%%%%%%%
+%% Define the Solution Environment %%
+%%%%%%%%%%%%%%%%%%%%%%%
+\declaretheoremstyle
+[
+spaceabove=0pt,
+spacebelow=0pt,
+headfont=\normalfont\bfseries,
+notefont=\mdseries,
+notebraces={(}{)},
+headpunct={:},
+headindent={},
+postheadspace={ },
+bodyfont=\normalfont,
+qed=$\blacksquare$,
+preheadhook={\begin{mdframed}[style=myframedstyle]},
+postfoothook=\end{mdframed},
+]{mystyle}
+
+\declaretheorem[style=mystyle,title=Solution]{solution}
+
+\mdfdefinestyle{myframedstyle}{%
+    topline=false,
+    rightline=false,
+    leftline=false,
+    bottomline=false,
+    skipabove=-6ex,
+    leftmargin=-10,
+    rightmargin=-10,
+    backgroundcolor=black!5}
+
+%%%%%%%%%%%%%%%%%%%%%%%
+%% Useful commands
+%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\eqref}[1]{Eq.~(\ref{#1})}
+\newcommand{\figref}[1]{Fig.~\ref{#1}}
+\newcommand{\proj}[2]{\textbf{P}_{#2} (#1)}
+\newcommand{\lspan}[1]{\textbf{span} (#1)}
+\newcommand{\rank}[1]{\textbf{rank} (#1)}
+\newcommand{\tr}{\operatorname{tr}}
+\newcommand{\RNum}[1]{\uppercase\expandafter{\romannumeral #1\relax}}
+\newcommand{\mb}[1]{\mathbf{#1}}
+
+% Definition environment
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Homework info
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\posted}{\text{2026.3.13}}
+\newcommand{\due}{\text{2026.3.20}}
+\newcommand{\hwno}{\text{1}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Put your information here
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\lec}{\text{肖力}}
+\newcommand{\name}{\text{陈璟皓}}
+\newcommand{\id}{\text{PB23010359}}
+
+\lhead{\textbf{\name}}
+\rhead{\textbf{\id}}
+\chead{\textbf{Homework \hwno}}
+
+\begin{document}
+    \vspace*{-4\baselineskip}
+    \thispagestyle{empty}
+
+    \begin{center}
+        {\bf\large 机器学习B}
+    \end{center}
+
+    \noindent
+    Lecturer: \lec
+    \hfill
+    Homework \hwno
+    \\
+    Posted: \posted
+    \hfill
+    Due: \due
+    \\
+    Name: \name
+    \hfill
+    ID: \id
+
+    \noindent
+    \rule{\textwidth}{2pt}
+
+    \medskip
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    % Exercise 1
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \begin{exercise}[ROC曲线与AUC计算]
+    假设给出如下表中 $10$ 个样本的真正类别和基于某个模型的它们预测为正类的概率, 绘制出 ROC 曲线, 并计算 AUC 值（需给出详细的计算过程）. 
+
+    \begin{center}
+        \renewcommand{\arraystretch}{1}
+        \setlength{\tabcolsep}{30pt}
+        \begin{tabular}{|c|c|c|}
+            \hline
+            样本 ID & 原本类别 & 预测为正类的概率 \\
+            \hline
+            1  & 正类 & 0.42 \\
+            2  & 正类 & 0.65 \\
+            3  & 负类 & 0.52 \\
+            4  & 正类 & 0.86 \\
+            5  & 正类 & 0.95 \\
+            6  & 负类 & 0.53 \\
+            7  & 负类 & 0.70 \\
+            8  & 负类 & 0.43 \\
+            9  & 正类 & 0.55 \\
+            10 & 负类 & 0.35 \\
+            \hline
+        \end{tabular}
+    \end{center}
+    \end{exercise}
+
+    \newpage
+
+\begin{solution}
+
+\end{solution}
+
+    \newpage
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    % Exercise 2
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \begin{exercise}[模型评估指标比较]
+    在某二分类任务中, 现有两个模型 A 和 B, 在同一个测试集（共 $200$ 个样本）上的预测结果如下. 
+
+    \medskip
+    \textbf{模型 A 的混淆矩阵: }
+
+    \begin{center}
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabular}{|c|c|c|}
+        \hline
+         & 预测正类 & 预测负类 \\
+        \hline
+        真实正类 & 48 & 12 \\
+        \hline
+        真实负类 & 18 & 122 \\
+        \hline
+    \end{tabular}
+    \end{center}
+
+    \medskip
+    \textbf{模型 B 的混淆矩阵: }
+
+    \begin{center}
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabular}{|c|c|c|}
+        \hline
+         & 预测正类 & 预测负类 \\
+        \hline
+        真实正类 & 54 & 6 \\
+        \hline
+        真实负类 & 30 & 110 \\
+        \hline
+    \end{tabular}
+    \end{center}
+
+    \medskip
+    请完成以下问题: 
+    \begin{enumerate}[label=(\arabic*)]
+        \item 在 Accuracy、Precision、Recall、F1、FPR、FNR 指标上比较两个模型; 
+        \item 若该任务是一般商品推荐系统（正类表示“用户感兴趣商品”, 负类表示“用户不感兴趣商品”）, 更适合选择哪个模型？为什么？
+        \item 若该任务是重大疾病筛查系统（正类表示“患病”, 负类表示“未患病”）, 更适合选择哪个模型？为什么？
+    \end{enumerate}
+    \end{exercise}
+    
+    \newpage
+
+\begin{solution}
+
+\end{solution}
+
+\end{document}
