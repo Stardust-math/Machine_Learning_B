@@ -1,0 +1,293 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%  Template for homework of Machine Learning.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[11pt,letter,notitlepage]{ctexart}
+
+\usepackage{fontspec}
+\setCJKmainfont{KaiTi}[BoldFont=KaiTi,ItalicFont=KaiTi]
+
+% Mise en page
+\usepackage[left=2cm, right=2cm, lines=45, top=0.8in, bottom=0.7in]{geometry}
+\usepackage{fancyhdr}
+\usepackage{fancybox}
+\usepackage{graphicx}
+\usepackage{pdfpages}
+\usepackage{enumitem}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{array}
+\usepackage{booktabs}
+\renewcommand{\headrulewidth}{1.5pt}
+\renewcommand{\footrulewidth}{1.5pt}
+\newcommand\Loadedframemethod{TikZ}
+\usepackage[framemethod=\Loadedframemethod]{mdframed}
+\usepackage{amssymb,amsmath}
+\usepackage{amsthm}
+\usepackage{thmtools}
+\usepackage{bm}
+\usepackage{multirow}
+\usepackage{makecell}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{caption}
+\usepackage[edges]{forest}
+
+\setlength{\topmargin}{0pt}
+\setlength{\textheight}{9in}
+\setlength{\headheight}{0pt}
+\setlength{\oddsidemargin}{0.25in}
+\setlength{\textwidth}{6in}
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%% Define math operator %%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%
+\DeclareMathOperator*{\argmin}{\bf argmin}
+\DeclareMathOperator*{\argmax}{\bf argmax}
+\DeclareMathOperator*{\relint}{\bf relint\,}
+\DeclareMathOperator*{\dom}{\bf dom\,}
+\DeclareMathOperator*{\intp}{\bf int\,}
+
+\DeclareMathOperator*{\cl}{\bf cl\,}
+\DeclareMathOperator*{\bd}{\bf bd\,}
+\DeclareMathOperator*{\conv}{\bf conv\,}
+\DeclareMathOperator*{\epi}{\bf epi\,}
+
+%%%%%%%%%%%%%%%%%%%%%%%
+\pagestyle{fancy}
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+%% Define the Exercise environment %%
+%%%%%%%%%%%%%%%%%%%%%%%%
+\mdtheorem[
+topline=false,
+rightline=false,
+leftline=false,
+bottomline=false,
+leftmargin=-10,
+rightmargin=-10
+]{exercise}{\textbf{Exercise}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+%% Define the Problem environment %%
+%%%%%%%%%%%%%%%%%%%%%%%%
+\mdtheorem[
+topline=false,
+rightline=false,
+leftline=false,
+bottomline=false,
+leftmargin=-10,
+rightmargin=-10
+]{problem}{\textbf{Problem}}
+
+%%%%%%%%%%%%%%%%%%%%%%%
+%% Define the Solution Environment %%
+%%%%%%%%%%%%%%%%%%%%%%%
+\declaretheoremstyle
+[
+spaceabove=0pt,
+spacebelow=0pt,
+headfont=\normalfont\bfseries,
+notefont=\mdseries,
+notebraces={(}{)},
+headpunct={:},
+headindent={},
+postheadspace={ },
+bodyfont=\normalfont,
+qed=$\blacksquare$,
+preheadhook={\begin{mdframed}[style=myframedstyle]},
+postfoothook=\end{mdframed},
+]{mystyle}
+
+\declaretheorem[style=mystyle,title=Solution]{solution}
+
+\mdfdefinestyle{myframedstyle}{%
+    topline=false,
+    rightline=false,
+    leftline=false,
+    bottomline=false,
+    skipabove=-6ex,
+    leftmargin=-10,
+    rightmargin=-10,
+    backgroundcolor=black!5}
+
+%%%%%%%%%%%%%%%%%%%%%%%
+%% Useful commands
+%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\eqref}[1]{Eq.~(\ref{#1})}
+\newcommand{\figref}[1]{Fig.~\ref{#1}}
+\newcommand{\proj}[2]{\textbf{P}_{#2} (#1)}
+\newcommand{\lspan}[1]{\textbf{span} (#1)}
+\newcommand{\rank}[1]{\textbf{rank} (#1)}
+\newcommand{\tr}{\operatorname{tr}}
+\newcommand{\RNum}[1]{\uppercase\expandafter{\romannumeral #1\relax}}
+\newcommand{\mb}[1]{\mathbf{#1}}
+
+% Definition environment
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Homework info
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\lec}{\text{肖力}}
+\newcommand{\posted}{\text{2026.4.14}}
+\newcommand{\due}{\text{2026.4.26}}
+\newcommand{\hwno}{\text{3}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Put your information here
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\name}{\text{陈璟皓}}
+\newcommand{\id}{\text{PB23010359}}
+
+\lhead{\textbf{\name}}
+\rhead{\textbf{\id}}
+\chead{\textbf{Homework \hwno}}
+
+\begin{document}
+    \vspace*{-4\baselineskip}
+    \thispagestyle{empty}
+
+    \begin{center}
+        {\bf\large 机器学习B}
+    \end{center}
+
+    \noindent
+    Lecturer: \lec
+    \hfill
+    Homework \hwno
+    \\
+    Posted: \posted
+    \hfill
+    Due: \due
+    \\
+    Name: \name
+    \hfill
+    ID: \id
+
+    \noindent
+    \rule{\textwidth}{2pt}
+
+    \medskip
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    % Exercise 1
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \begin{exercise}[基于 LIBSVM 的线性核与高斯核 SVM 比较]
+课本习题6.2，即：
+
+试使用 LIBSVM，在西瓜数据集 3.0$\alpha$ 上分别用线性核和高斯核训练一个 SVM，并比较其支持向量的差别。
+
+\begin{table}[H]
+\centering
+\begin{tabular}{p{0.2\textwidth}p{0.2\textwidth}p{0.2\textwidth}p{0.2\textwidth}}
+\hline
+编号 & 密度 & 含糖率 & 好瓜 \\
+\hline
+1  & 0.697 & 0.460 & 是 \\
+2  & 0.774 & 0.376 & 是 \\
+3  & 0.634 & 0.264 & 是 \\
+4  & 0.608 & 0.318 & 是 \\
+5  & 0.556 & 0.215 & 是 \\
+6  & 0.403 & 0.237 & 是 \\
+7  & 0.481 & 0.149 & 是 \\
+8  & 0.437 & 0.211 & 是 \\
+9  & 0.666 & 0.091 & 否 \\
+10 & 0.243 & 0.267 & 否 \\
+11 & 0.245 & 0.057 & 否 \\
+12 & 0.343 & 0.099 & 否 \\
+13 & 0.639 & 0.161 & 否 \\
+14 & 0.657 & 0.198 & 否 \\
+15 & 0.360 & 0.370 & 否 \\
+16 & 0.593 & 0.042 & 否 \\
+17 & 0.719 & 0.103 & 否 \\
+\hline
+\end{tabular}
+\caption{西瓜数据集 3.0$\alpha$}
+\end{table}
+    \end{exercise}
+
+    \newpage
+
+    \begin{solution}
+        
+    \end{solution}
+
+    \newpage
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    % Exercise 2
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \begin{exercise}[线性可分判定与硬间隔支持向量机]
+有下面 8 个训练样本（只有两个属性）
+\[
+x_1=(2,3),\ x_2=(3,2),\ x_3=(4,4),\ x_4=(4,2)
+\]
+\[
+x_5=(6,4),\ x_6=(6,3),\ x_7=(7,2),\ x_8=(8,3)
+\]
+
+以及它们对应的二分类的类别标记为
+\[
+y_1=y_2=y_3=y_4=-1,\qquad y_5=y_6=y_7=y_8=1.
+\]
+
+\begin{enumerate}
+    \item 判断这 8 个训练样本是否线性可分？如果线性可分，通过硬间隔最大化，求出基于这 8 个训练数据得到的线性支持向量模型（列出具体步骤，其中 SMO 算法求对偶问题的时候，用 SMO 的计算机编程 code 去算）。
+
+    \item 请问哪些训练样本是上面训练所得模型的支持向量？
+
+    \item 通过学出的模型，决定下面 3 个样本的预测类别
+    \[
+    x_9=(3,4),\quad x_{10}=(7,4),\quad x_{11}=(5,5).
+    \]
+\end{enumerate}
+    \end{exercise}
+
+    \newpage
+
+    \begin{solution}
+        
+    \end{solution}
+
+    \newpage
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    % Exercise 3
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \begin{exercise}[朴素贝叶斯分类器与新样本预测]
+给出下面 7 只猫在三个属性（颜色、毛发、体型）上的值，以及每只猫对应的标记（性格）是“温顺”或“暴躁”。基于这 7 个训练样本，手算求出朴素贝叶斯分类器来预测一只新猫
+\[
+x=(\text{黑色},\ \text{粗糙},\ \text{小型})
+\]
+的性格是哪一类？
+
+\begin{center}
+\begin{tabular}{p{0.2\textwidth}p{0.2\textwidth}p{0.2\textwidth}p{0.2\textwidth}}
+\toprule
+\textbf{颜色} & \textbf{毛发} & \textbf{体型} & \textbf{性格} \\
+\midrule
+棕色 & 粗糙 & 小型 & 温顺 \\
+黑色 & 粗糙 & 大型 & 暴躁 \\
+黑色 & 光滑 & 大型 & 暴躁 \\
+黑色 & 卷曲 & 小型 & 温顺 \\
+白色 & 卷曲 & 小型 & 温顺 \\
+白色 & 光滑 & 小型 & 暴躁 \\
+红色 & 粗糙 & 大型 & 温顺 \\
+\midrule
+黑色 & 粗糙 & 小型 & ?? \\
+\bottomrule
+\end{tabular}
+\end{center}
+    \end{exercise}
+
+\newpage
+
+\begin{solution}
+    
+\end{solution}
+
+\end{document}
