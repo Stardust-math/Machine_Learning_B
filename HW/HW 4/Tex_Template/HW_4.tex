@@ -1,0 +1,295 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%  Template for homework of Machine Learning.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[11pt,letter,notitlepage]{ctexart}
+
+\usepackage{fontspec}
+\setCJKmainfont{KaiTi}[BoldFont=KaiTi,ItalicFont=KaiTi]
+
+% Mise en page
+\usepackage[left=2cm, right=2cm, lines=45, top=0.8in, bottom=0.7in]{geometry}
+\usepackage{fancyhdr}
+\usepackage{fancybox}
+\usepackage{graphicx}
+\usepackage{pdfpages}
+\usepackage{enumitem}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{array}
+\usepackage{booktabs}
+\renewcommand{\headrulewidth}{1.5pt}
+\renewcommand{\footrulewidth}{1.5pt}
+\newcommand\Loadedframemethod{TikZ}
+\usepackage[framemethod=\Loadedframemethod]{mdframed}
+\usepackage{amssymb,amsmath}
+\usepackage{amsthm}
+\usepackage{thmtools}
+\usepackage{bm}
+\usepackage{multirow}
+\usepackage{makecell}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{float}
+\usepackage{caption}
+\usepackage[edges]{forest}
+\usepackage{xcolor}
+\usepackage{listings}
+
+\definecolor{codebg}{RGB}{248,248,248}
+\definecolor{codekw}{RGB}{0,0,180}
+\definecolor{codecom}{RGB}{0,120,0}
+\definecolor{codestr}{RGB}{163,21,21}
+\definecolor{codenum}{RGB}{120,120,120}
+
+\lstdefinestyle{mypython}{
+    language=Python,
+    backgroundcolor=\color{codebg},
+    basicstyle=\ttfamily\small,
+    keywordstyle=\color{codekw}\bfseries,
+    commentstyle=\color{codecom}\itshape,
+    stringstyle=\color{codestr},
+    numberstyle=\scriptsize\color{codenum},
+    numbers=left,
+    numbersep=8pt,
+    showstringspaces=false,
+    showspaces=false,
+    showtabs=false,
+    breaklines=true,
+    breakatwhitespace=false,
+    tabsize=4,
+    frame=single,
+    rulecolor=\color{black!30},
+    columns=fullflexible,
+    keepspaces=true,
+    captionpos=b
+}
+
+\setlength{\topmargin}{0pt}
+\setlength{\textheight}{9in}
+\setlength{\headheight}{0pt}
+\setlength{\oddsidemargin}{0.25in}
+\setlength{\textwidth}{6in}
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%% Define math operator %%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%
+\DeclareMathOperator*{\argmin}{\bf argmin}
+\DeclareMathOperator*{\argmax}{\bf argmax}
+\DeclareMathOperator*{\relint}{\bf relint\,}
+\DeclareMathOperator*{\dom}{\bf dom\,}
+\DeclareMathOperator*{\intp}{\bf int\,}
+
+\DeclareMathOperator*{\cl}{\bf cl\,}
+\DeclareMathOperator*{\bd}{\bf bd\,}
+\DeclareMathOperator*{\conv}{\bf conv\,}
+\DeclareMathOperator*{\epi}{\bf epi\,}
+
+%%%%%%%%%%%%%%%%%%%%%%%
+\pagestyle{fancy}
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+%% Define the Exercise environment %%
+%%%%%%%%%%%%%%%%%%%%%%%%
+\mdtheorem[
+topline=false,
+rightline=false,
+leftline=false,
+bottomline=false,
+leftmargin=-10,
+rightmargin=-10
+]{exercise}{\textbf{Exercise}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%
+%% Define the Problem environment %%
+%%%%%%%%%%%%%%%%%%%%%%%%
+\mdtheorem[
+topline=false,
+rightline=false,
+leftline=false,
+bottomline=false,
+leftmargin=-10,
+rightmargin=-10
+]{problem}{\textbf{Problem}}
+
+%%%%%%%%%%%%%%%%%%%%%%%
+%% Define the Solution Environment %%
+%%%%%%%%%%%%%%%%%%%%%%%
+\declaretheoremstyle
+[
+spaceabove=0pt,
+spacebelow=0pt,
+headfont=\normalfont\bfseries,
+notefont=\mdseries,
+notebraces={(}{)},
+headpunct={:},
+headindent={},
+postheadspace={ },
+bodyfont=\normalfont,
+qed=$\blacksquare$,
+preheadhook={\begin{mdframed}[style=myframedstyle]},
+postfoothook=\end{mdframed},
+]{mystyle}
+
+\declaretheorem[style=mystyle,title=Solution]{solution}
+
+\mdfdefinestyle{myframedstyle}{%
+    topline=false,
+    rightline=false,
+    leftline=false,
+    bottomline=false,
+    skipabove=-6ex,
+    leftmargin=-10,
+    rightmargin=-10,
+    backgroundcolor=black!5}
+
+%%%%%%%%%%%%%%%%%%%%%%%
+%% Useful commands
+%%%%%%%%%%%%%%%%%%%%%%%
+\renewcommand{\eqref}[1]{Eq.~(\ref{#1})}
+\newcommand{\figref}[1]{Fig.~\ref{#1}}
+\newcommand{\proj}[2]{\textbf{P}_{#2} (#1)}
+\newcommand{\lspan}[1]{\textbf{span} (#1)}
+\newcommand{\rank}[1]{\textbf{rank} (#1)}
+\newcommand{\tr}{\operatorname{tr}}
+\newcommand{\RNum}[1]{\uppercase\expandafter{\romannumeral #1\relax}}
+\newcommand{\mb}[1]{\mathbf{#1}}
+
+% Definition environment
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Homework info
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\lec}{\text{肖力}}
+\newcommand{\posted}{\text{2026.5.18}}
+\newcommand{\due}{\text{2026.5.28}}
+\newcommand{\hwno}{\text{4}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Put your information here
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand{\name}{\text{陈璟皓}}
+\newcommand{\id}{\text{PB23010359}}
+
+\lhead{\textbf{\name}}
+\rhead{\textbf{\id}}
+\chead{\textbf{Homework \hwno}}
+
+\begin{document}
+    \vspace*{-4\baselineskip}
+    \thispagestyle{empty}
+
+    \begin{center}
+        {\bf\large 机器学习B}
+    \end{center}
+
+    \noindent
+    Lecturer: \lec
+    \hfill
+    Homework \hwno
+    \\
+    Posted: \posted
+    \hfill
+    Due: \due
+    \\
+    Name: \name
+    \hfill
+    ID: \id
+
+    \noindent
+    \rule{\textwidth}{2pt}
+
+    \medskip
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    % Exercise 1
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \begin{exercise}
+给定 8 维空间中的 3 个数据样本如下：
+\[
+X=
+\begin{bmatrix}
+12 & 3  & 6  & 12 & 9  & 9 & 15 & 18 \\
+15 & 18 & 6  & 15 & 3  & 6 & 9  & 15 \\
+12 & 12 & 12 & 3  & 18 & 3 & 12 & 15
+\end{bmatrix}
+\in \mathbb{R}^{3\times 8}.
+\]
+其中 $X$ 的每一行代表一个样本。现对 $X$ 进行主成分分析（PCA），求出前两个主成分。\\
+（提示：已知矩阵
+\[
+\begin{bmatrix}
+96 & -48 & -48 \\
+-48 & 141 & -93 \\
+-48 & -93 & 141
+\end{bmatrix}
+\]
+的三个特征值分别为 234、144、0。）
+    \end{exercise}
+
+    \newpage
+
+\begin{solution}
+\end{solution}
+
+    \newpage
+
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    % Exercise 2
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{exercise}
+书中推导 kernel PCA 时，在 Page 233 的公式（10.21），即
+\[
+\left(
+\sum_{i=1}^{n} \phi(x_i)\phi(x_i)^{\mathrm{T}}
+\right)\mathbf{w}
+=
+\lambda \mathbf{w},
+\tag{10.21}
+\]
+默认假设映射后的样本 $\phi(x_i)$ 已经中心化，即满足
+\[
+\sum_{i=1}^{n}\phi(x_i)=0.
+\]
+现在，我们在不作该假设的情况下，给出 kernel PCA 的推导过程。
+
+设原始样本为
+\[
+x_1,x_2,\cdots,x_n\in\mathbb{R}^d.
+\]
+通过非线性映射
+\[
+\phi:\mathbb{R}^d\to\mathcal{F},\qquad x\mapsto \phi(x),
+\]
+将样本映射到高维特征空间 $\mathcal{F}$。
+
+由于 PCA 要求数据为零均值，因此需要对映射后的样本进行中心化：
+\[
+\tilde{\phi}(x_i)
+=
+\phi(x_i)
+-
+\frac{1}{n}\sum_{j=1}^{n}\phi(x_j).
+\]
+记中心化后的特征矩阵为
+\[
+\tilde{\Phi}
+=
+\bigl[
+\tilde{\phi}(x_1),
+\tilde{\phi}(x_2),
+\cdots,
+\tilde{\phi}(x_n)
+\bigr].
+\]
+\end{exercise}
+
+    \newpage
+
+\begin{solution}
+\end{solution}
+
+\end{document}
